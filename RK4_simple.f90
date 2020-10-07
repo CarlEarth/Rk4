@@ -1,32 +1,29 @@
 program testnow
 implicit none
-
- call evaluate(0.d0,1.d0,-0.4d0,-0.6d0)
-
+!Input the ini_t,final_t,ini_y and ini_ydot.
+call evaluate(0.d0,1.d0,-0.4d0,-0.6d0) !###Modify###
 end
 
-
-
-
+!Define the forms of coefficients.
+!--------------------------------
 real (kind=8) function jae1(t,y)
 implicit none
  real (kind=8) :: t,y
-jae1=-2.d0
+jae1=-2.d0 !###Modify###
 return
 end function jae1
-
 !--------------------------------
 real (kind=8) function jae2(t,y)
 implicit none
 real (kind=8) :: t,y
-jae2=2.d0
+jae2=2.d0 !###Modify###
 return
 end function jae2
 !--------------------------------
 real (kind=8) function jae3(t,y)
 implicit none
 real (kind=8) :: t,y
-jae3=-DEXP(2*t)*DSIN(t)
+jae3=-DEXP(2*t)*DSIN(t) !###Modify###
 return
 end function jae3
 !==================================
@@ -116,18 +113,16 @@ if(MOD(i,1000000) .eq. 0) then
 write(10,*)J1,	J2, J3
 write(9,*)t,	w1,	w2
 endif
+
+!The program will stop when w1 is NAN. 
 if (w1 .ne. w1) then
-
 exit
-
 endif
-
 
 end do
 
-
- CLOSE(10)
- CLOSE(9)
+CLOSE(10)
+CLOSE(9)
 
 end subroutine evaluate
 
