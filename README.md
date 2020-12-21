@@ -8,4 +8,10 @@ Step: (in Linux)
 1. gfortran RK4_simple.f90
 2. ./a.out
 
-Then it will output the <J1(t),J2(t),J3(t)> and < y'(t),y(t)>
+Then it will output the <J1(t),J2(t),J3(t)> , < y'(t),y(t)> and < t, y(t)>.
+
+In the code, the physical example is written in the code to help the user 
+to understand how to use the code. (Example is Damped and driven oscillation.)
+
+Modify the J1(t),J2(t),J3(t) function to solve your second order differential
+problem.
