@@ -6,10 +6,10 @@ implicit none
 !Consider a mass-spring system.
 real (kind=8) :: m,k,c,F0,J1,J2,J3
 real (kind=8) :: ini_t ,final_t,ini_y,ini_ydot
-m=0.5  !m:mass (unit:kg)
-k=2.0  !spring constant
-c=0.03 !damping term (for friction force)
-F0=1   !Motor can give the periodic force
+m=0.5d0  !m:mass (unit:kg)
+k=8.d0  !spring constant
+c=0.03d0 !damping term (for friction force)
+F0=1.0d0   !Motor can give the periodic force
 !---------------------
 J1=c/m
 J2=k/m
@@ -20,7 +20,7 @@ WRITE (*, FMT= 200) "X''+", J1,"X'+",J2,"X-",J3,"coswt = 0"
 200 format(1x, a, 1x,f5.2 , 1x, a, 1x,f5.2 ,1x, a, 1x,f5.2 ,1x,a)
 !100 format (7x,'Name:',f12.3,J3, 7x, 'Id:', 1x, 'Weight:')
 ini_t = 0.d0
-final_t = 20.d0
+final_t = 50.d0
 ini_y = 0.0d0
 ini_ydot = 0.0d0
 !Input the ini_t,final_t,ini_y and ini_ydot.
@@ -42,15 +42,18 @@ real (kind=8) function jae2(t,y)
 implicit none
 real (kind=8) :: t,y
 !jae2=2.d0 !###Modify###
-jae2=4.d0 !###Modify###
+jae2=16.d0 !###Modify###
 return
 end function jae2
 !--------------------------------
 real (kind=8) function jae3(t,y)
 implicit none
-real (kind=8) :: t,y
+real (kind=8) :: t,y,pi,w
+pi=3.1415926d0
+w=1.5 !resonance w =jae2^0.5
 !jae3=-DEXP(2*t)*DSIN(t) !###Modify###
-jae3=-2.d0*DCOS(t)
+!jae3=-2.d0*DCOS(2.d0*pi*t)
+jae3=-2.0d0*DSIN(3.5d0*t)
 return
 end function jae3
 !==================================
@@ -80,7 +83,7 @@ real (kind=8) :: f1,f2,jae1,jae2,jae3
 integer :: i,j
 real (kind=8) :: k(4,3)
 real (kind=8) :: w1,w2
-integer :: Nf=10000000, testit=1
+integer :: Nf=5000000, testit=1
 !real(dl) rhode_a(Ncut),w_eff_a(Ncut),a_array(Ncut)
 
 h=(final_t-ini_t)/Nf
@@ -90,7 +93,7 @@ w2=ini_ydot !(initial y')
 J1=jae1(t,w1)
 J2=jae2(t,w1)
 J3=jae3(t,w1)
-
+OPEN(UNIT=11,FILE='time_position',STATUS='UNKNOWN')
 OPEN(UNIT=10,FILE='J1J2J3',STATUS='UNKNOWN')
 OPEN(UNIT=9,FILE='df_result',STATUS='UNKNOWN')
 
@@ -135,14 +138,12 @@ w1=w1+(k(1,1)+2.d0*k(2,1)+2.d0*k(3,1)+k(4,1))/6.d0
 w2=w2+(k(1,2)+2.d0*k(2,2)+2.d0*k(3,2)+k(4,2))/6.d0
 
 ! print the calulation result
-if(MOD(i,1000000) .eq. 0) then
-!write(*,*)"n=",i
-!write(10,*)J1,	J2, J3
+if(MOD(i,1000) .eq. 0) then
 WRITE (10, FMT= 109) "t=",t,",J1=", J1,",J2=",J2,",J3=",J3
 109 format(1x, a, 1x,f5.2 , 1x, a, 1x,f5.2 ,1x, a, 1x,f5.2 ,1x,a, 1x,f5.2)
 WRITE (9, FMT= 110) "t=",t,",x=", w1,",v=",w2
 110 format(1x, a, 1x,f5.2 , 1x, a, 1x,f5.2 ,1x, a, 1x,f5.2)
-!write(9,*)t,	w1,	w2
+WRITE (11, *) t, w1
 endif
 
 !The program will stop when w1 is NAN. 
@@ -151,7 +152,7 @@ exit
 endif
 
 end do
-
+CLOSE(11)
 CLOSE(10)
 CLOSE(9)
 
