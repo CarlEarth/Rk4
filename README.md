@@ -21,3 +21,6 @@ to understand how to use the code. (Example is Damped and driven oscillation.)
 
 Modify the J1(t),J2(t),J3(t) function to solve your second order differential
 problem.
+
+plot1.py: Output the rest x-t plot.
+plot3.py: Output the oscillator animation.
