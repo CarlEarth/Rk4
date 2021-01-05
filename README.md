@@ -9,18 +9,19 @@ Step: (in Linux)
 2. ./a.out
 3. python3 plot2.py
 
-or type the command:
+or Just type:
 
 sh script.sh
 
-Then it will output the <J1(t),J2(t),J3(t)> , < y'(t),y(t)>, < t, y(t)> 
+Then it will output the <J1(t),J2(t),J3(t)> , < y'(t),y(t)>, < t, y(t)>  
 and the x-t plot animation.
 
-In the code, the physical example is written in the code to help the user 
-to understand how to use the code. (Example is Damped and driven oscillation.)
+In the code, the physical example is written in the code to help the user  
+to understand how to use the code.  
+(Example: Damped and driven oscillation.)
 
 Modify the J1(t),J2(t),J3(t) function to solve your second order differential
 problem.
 
-plot1.py: Output the rest x-t plot.
+plot1.py: Output the rest x-t plot.  
 plot3.py: Output the oscillator animation.
